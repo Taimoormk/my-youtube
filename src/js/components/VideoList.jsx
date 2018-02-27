@@ -10,9 +10,8 @@ import VideoListEntry from './VideoListEntry';
 export default class VideoList extends Component {
 
   createList() {
-    let { videoList, handleSelectedVideo } = this.props;
-    return videoList.map((item, i) => {
-      return <VideoListEntry key={i} video={item} handleSelectedVideo={handleSelectedVideo} />
+    return this.props.videoList.map((item, i) => {
+      return <VideoListEntry key={i} video={item} {...this.props} />
     });
   }
 

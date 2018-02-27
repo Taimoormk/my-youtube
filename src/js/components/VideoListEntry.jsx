@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 // ########## Import Components here ##########
 
-const VideoListEntry = ({ video, handleSelectedVideo }) => {
+const VideoListEntry = ({ video, handleSelectedVideo, history }) => {
   return (
     <div className="video-list-entry">
       <div className="media">
@@ -19,7 +19,10 @@ const VideoListEntry = ({ video, handleSelectedVideo }) => {
         <div className="media-body">
           <h4
             className="media-heading"
-            onClick={() => handleSelectedVideo(video)}
+            onClick={() => {
+              handleSelectedVideo(video)
+              history.push(`/player/${video.id.videoId}`)}
+            }
           >
             {video.snippet.title}
           </h4>

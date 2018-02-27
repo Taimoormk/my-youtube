@@ -1,6 +1,12 @@
 // ########## Import Dependencies here ##########
 import React, { Component } from 'react';
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link,
+  Redirect
+} from 'react-router-dom';
 
 // ########## Import Screens here ##########
 
@@ -55,23 +61,48 @@ export default class App extends Component {
   render() {
     let { selectedVideo, videoList } = this.state;
     return (
-      <div className="app">
-        <Nav 
-          getVideos={this.getVideos}
-          cbUpdateVideos={this.cbUpdateVideos}
-        />
-        <div className="col-md-7">
-          <VideoPlayer 
-            selectedVideo={selectedVideo}
+      <Router>
+        <div className="app">
+          <ul>
+            <li><Link to="/">List</Link></li>
+          </ul>
+          <Route
+            exact path="/"
+            render={routeProps => (
+              <div>
+                <Nav
+                  getVideos={this.getVideos}
+                  cbUpdateVideos={this.cbUpdateVideos}
+                  {...routeProps}
+                />
+                <div className="col-md-10 col-md-offset-1">
+                  <VideoList
+                    videoList={videoList}
+                    handleSelectedVideo={this.handleSelectedVideo}
+                    {...routeProps}
+                  />
+                </div>
+              </div>
+            )}
+          />
+          <Route
+            path="/player/:id"
+            render={routeProps => {
+              console.log('player id entered');
+              return (
+                <div className="col-md-8 col-md-offset-2">
+                  <VideoPlayer
+                    selectedVideo={selectedVideo}
+                    getVideos={this.getVideos}
+                    cbGetVideos={this.cbGetVideos}
+                    {...routeProps}
+                  />
+                </div>
+              )
+            }}
           />
         </div>
-        <div className="col-md-5">
-          <VideoList 
-            videoList={videoList}
-            handleSelectedVideo={this.handleSelectedVideo}
-          />
-        </div>
-      </div>
+      </Router>
     );
   }
 
