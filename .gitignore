@@ -59,3 +59,6 @@ typings/
 
 # configuration
 config/
+
+# MAC files
+.DS_Store
